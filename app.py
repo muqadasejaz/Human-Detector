@@ -223,19 +223,10 @@ if mode == "📹 Video File":
             width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-            # Pick 50 evenly-spaced frame indices from the video
-            MAX_FRAMES = 50
-            if total_frames <= MAX_FRAMES:
-                frame_indices = list(range(total_frames))
-            else:
-                step = total_frames / MAX_FRAMES
-                frame_indices = [int(i * step) for i in range(MAX_FRAMES)]
-            frame_index_set = set(frame_indices)
-
-            # Output video (fixed 10 fps for the 50-frame clip)
+            # Output video
             out_path = tempfile.mktemp(suffix="_detected.mp4")
             fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-            out = cv2.VideoWriter(out_path, fourcc, 10, (width, height))
+            out = cv2.VideoWriter(out_path, fourcc, fps, (width, height))
 
             progress_bar = st.progress(0, text="Analysing video…")
             frame_placeholder = st.empty()
@@ -243,16 +234,11 @@ if mode == "📹 Video File":
             total_persons_all = 0
             max_persons       = 0
             processed         = 0
-            current_index     = 0
 
             while cap.isOpened():
                 ret, frame = cap.read()
                 if not ret:
                     break
-
-                if current_index not in frame_index_set:
-                    current_index += 1
-                    continue
 
                 results = model(frame, stream=True, verbose=False)
                 person_count = 0
@@ -286,12 +272,12 @@ if mode == "📹 Video File":
                 total_persons_all += person_count
                 max_persons = max(max_persons, person_count)
                 processed  += 1
-                current_index += 1
 
-                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                frame_placeholder.image(rgb, use_container_width=True)
-                progress = processed / len(frame_indices)
-                progress_bar.progress(progress, text=f"Frame {processed}/{len(frame_indices)}")
+                if processed % 8 == 0:
+                    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frame_placeholder.image(rgb, use_container_width=True)
+                    progress = min(processed / max(total_frames, 1), 1.0)
+                    progress_bar.progress(progress, text=f"Frame {processed}/{total_frames}")
 
             cap.release()
             out.release()
@@ -311,16 +297,21 @@ if mode == "📹 Video File":
             with c3:
                 st.markdown(f'<div class="stat-card"><div class="stat-number">{avg}</div><div class="stat-label">Avg per Frame</div></div>', unsafe_allow_html=True)
 
-            # ── Download ─────────────────────────────────────────────────
+            # ── Result Video on screen ────────────────────────────────────
             st.markdown("<hr>", unsafe_allow_html=True)
-            st.markdown('<div class="section-label">Download Result</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">Detection Result</div>', unsafe_allow_html=True)
             with open(out_path, "rb") as f:
-                st.download_button(
-                    label="⬇  Download Detected Video",
-                    data=f,
-                    file_name="human_detected.mp4",
-                    mime="video/mp4"
-                )
+                video_bytes = f.read()
+            st.video(video_bytes)
+
+            # ── Download ─────────────────────────────────────────────────
+            st.markdown('<div class="section-label" style="margin-top:1rem;">Download Result</div>', unsafe_allow_html=True)
+            st.download_button(
+                label="⬇  Download Detected Video",
+                data=video_bytes,
+                file_name="human_detected.mp4",
+                mime="video/mp4"
+            )
             os.unlink(out_path)
 
 # ══════════════════════════════════════════════════════════════
