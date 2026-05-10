@@ -173,12 +173,7 @@ st.markdown("""
 <div style="margin-bottom: 0.5rem;">
   <div class="hero-title">Human <span class="hero-accent">Detection</span></div>
 
-  <div class="hero-sub">YOLOv8 · Real-time · Video Analysis</div>
-</div>
-<div style="margin-bottom: 1.8rem;">
-  <span class="badge">YOLOv8n</span>
-  <span class="badge">OpenCV</span>
-  <span class="badge">Ultralytics</span>
+  <div style="font-family:'DM Sans',sans-serif; font-size:1rem; color:#4b5563; margin-top:0.6rem; margin-bottom:1.8rem;">Upload an image or video and detect humans instantly using YOLOv8.</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -228,10 +223,19 @@ if mode == "📹 Video File":
             width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-            # Output video
+            # Pick 50 evenly-spaced frame indices from the video
+            MAX_FRAMES = 50
+            if total_frames <= MAX_FRAMES:
+                frame_indices = list(range(total_frames))
+            else:
+                step = total_frames / MAX_FRAMES
+                frame_indices = [int(i * step) for i in range(MAX_FRAMES)]
+            frame_index_set = set(frame_indices)
+
+            # Output video (fixed 10 fps for the 50-frame clip)
             out_path = tempfile.mktemp(suffix="_detected.mp4")
             fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-            out = cv2.VideoWriter(out_path, fourcc, fps, (width, height))
+            out = cv2.VideoWriter(out_path, fourcc, 10, (width, height))
 
             progress_bar = st.progress(0, text="Analysing video…")
             frame_placeholder = st.empty()
@@ -239,11 +243,16 @@ if mode == "📹 Video File":
             total_persons_all = 0
             max_persons       = 0
             processed         = 0
+            current_index     = 0
 
             while cap.isOpened():
                 ret, frame = cap.read()
                 if not ret:
                     break
+
+                if current_index not in frame_index_set:
+                    current_index += 1
+                    continue
 
                 results = model(frame, stream=True, verbose=False)
                 person_count = 0
@@ -277,12 +286,12 @@ if mode == "📹 Video File":
                 total_persons_all += person_count
                 max_persons = max(max_persons, person_count)
                 processed  += 1
+                current_index += 1
 
-                if processed % 8 == 0:
-                    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    frame_placeholder.image(rgb, use_container_width=True)
-                    progress = min(processed / max(total_frames, 1), 1.0)
-                    progress_bar.progress(progress, text=f"Frame {processed}/{total_frames}")
+                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame_placeholder.image(rgb, use_container_width=True)
+                progress = processed / len(frame_indices)
+                progress_bar.progress(progress, text=f"Frame {processed}/{len(frame_indices)}")
 
             cap.release()
             out.release()
