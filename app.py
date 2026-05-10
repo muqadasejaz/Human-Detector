@@ -17,16 +17,16 @@ st.set_page_config(
 # ── Custom CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
 
   html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
   }
 
-  /* Dark background */
+  /* White background */
   .stApp {
-    background-color: #0a0c10;
-    color: #e8eaf0;
+    background-color: #ffffff;
+    color: #1a1a1a;
   }
 
   /* Hide default header/footer/menu */
@@ -34,44 +34,44 @@ st.markdown("""
 
   /* Hero title */
   .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
     font-size: 2.8rem;
-    letter-spacing: -0.03em;
-    color: #ffffff;
+    color: #1a1a1a;
     line-height: 1.1;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
   }
   .hero-accent {
-    color: #00e5ff;
+    color: #2563eb;
   }
   .hero-sub {
-    font-size: 0.95rem;
-    color: #6b7280;
-    font-weight: 300;
-    letter-spacing: 0.04em;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: #9ca3af;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   /* Stat card */
   .stat-card {
-    background: #12151c;
-    border: 1px solid #1e2330;
+    background: #f8f9fb;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 1.2rem 1.5rem;
     text-align: center;
   }
   .stat-number {
-    font-family: 'Syne', sans-serif;
+    font-family: 'DM Serif Display', serif;
     font-size: 2.2rem;
-    font-weight: 700;
-    color: #00e5ff;
+    color: #2563eb;
     line-height: 1;
   }
   .stat-label {
-    font-size: 0.75rem;
-    color: #4b5563;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    color: #9ca3af;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 0.3rem;
@@ -79,21 +79,20 @@ st.markdown("""
 
   /* Upload area */
   [data-testid="stFileUploader"] {
-    border: 1px dashed #1e2330 !important;
+    border: 1.5px dashed #d1d5db !important;
     border-radius: 12px !important;
-    background: #12151c !important;
+    background: #f8f9fb !important;
     padding: 1rem !important;
   }
 
   /* Buttons */
   .stButton > button {
-    background: #00e5ff !important;
-    color: #0a0c10 !important;
-    font-family: 'Syne', sans-serif !important;
-    font-weight: 700 !important;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 600 !important;
     font-size: 0.9rem !important;
-    letter-spacing: 0.05em !important;
-    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
     border: none !important;
     border-radius: 8px !important;
     padding: 0.65rem 2rem !important;
@@ -101,65 +100,70 @@ st.markdown("""
     transition: opacity 0.2s ease !important;
   }
   .stButton > button:hover {
-    opacity: 0.85 !important;
+    opacity: 0.88 !important;
+  }
+
+  /* Download button */
+  [data-testid="stDownloadButton"] > button {
+    background: #f0f4ff !important;
+    color: #2563eb !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 600 !important;
+    border: 1.5px solid #bfcfff !important;
+    border-radius: 8px !important;
+    width: 100% !important;
   }
 
   /* Progress bar */
   .stProgress > div > div {
-    background-color: #00e5ff !important;
+    background-color: #2563eb !important;
   }
 
   /* Divider */
   hr {
-    border-color: #1e2330;
+    border-color: #e5e7eb;
     margin: 1.5rem 0;
-  }
-
-  /* Info/success boxes */
-  .stAlert {
-    background: #12151c !important;
-    border-color: #1e2330 !important;
-    color: #e8eaf0 !important;
-    border-radius: 10px !important;
   }
 
   /* Select box */
   .stSelectbox > div > div {
-    background: #12151c !important;
-    border-color: #1e2330 !important;
-    color: #e8eaf0 !important;
+    background: #f8f9fb !important;
+    border-color: #e5e7eb !important;
+    color: #1a1a1a !important;
     border-radius: 8px !important;
+    font-family: 'DM Sans', sans-serif !important;
   }
 
   /* Image caption */
   .stImage > div > div > div {
-    color: #4b5563 !important;
+    color: #9ca3af !important;
     font-size: 0.78rem !important;
   }
 
   /* Section label */
   .section-label {
-    font-family: 'Syne', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
-    color: #4b5563;
-    margin-bottom: 0.6rem;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
   }
 
   /* Tag badge */
   .badge {
     display: inline-block;
-    background: #0d2a30;
-    color: #00e5ff;
+    background: #eff6ff;
+    color: #2563eb;
     font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
     margin-right: 0.4rem;
-    border: 1px solid #00e5ff22;
+    border: 1px solid #bfdbfe;
   }
 </style>
 """, unsafe_allow_html=True)
@@ -168,6 +172,7 @@ st.markdown("""
 st.markdown("""
 <div style="margin-bottom: 0.5rem;">
   <div class="hero-title">Human <span class="hero-accent">Detection</span></div>
+
   <div class="hero-sub">YOLOv8 · Real-time · Video Analysis</div>
 </div>
 <div style="margin-bottom: 1.8rem;">
@@ -252,20 +257,20 @@ if mode == "📹 Video File":
                             x1, y1, x2, y2 = map(int, box.xyxy[0])
 
                             # Bounding box
-                            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 229, 255), 2)
+                            cv2.rectangle(frame, (x1, y1), (x2, y2), (37, 99, 235), 2)
 
                             # Label background
                             label = f"Person {person_count}"
                             (lw, lh), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, 1)
-                            cv2.rectangle(frame, (x1, y1 - lh - 8), (x1 + lw + 6, y1), (0, 229, 255), -1)
+                            cv2.rectangle(frame, (x1, y1 - lh - 8), (x1 + lw + 6, y1), (37, 99, 235), -1)
                             cv2.putText(frame, label, (x1 + 3, y1 - 4),
-                                        cv2.FONT_HERSHEY_SIMPLEX, 0.55, (10, 12, 16), 1)
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 1)
 
                 # Count overlay (top-left)
                 overlay_text = f"Persons Detected: {person_count}"
-                cv2.rectangle(frame, (0, 0), (260, 42), (10, 12, 16), -1)
+                cv2.rectangle(frame, (0, 0), (260, 42), (37, 99, 235), -1)
                 cv2.putText(frame, overlay_text, (10, 28),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 229, 255), 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2)
 
                 out.write(frame)
 
@@ -336,17 +341,17 @@ else:
                     if cls == 0 and conf > 0.45:
                         person_count += 1
                         x1, y1, x2, y2 = map(int, box.xyxy[0])
-                        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 229, 255), 2)
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), (37, 99, 235), 2)
                         label = f"Person {person_count}"
                         (lw, lh), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
-                        cv2.rectangle(frame, (x1, y1 - lh - 8), (x1 + lw + 6, y1), (0, 229, 255), -1)
+                        cv2.rectangle(frame, (x1, y1 - lh - 8), (x1 + lw + 6, y1), (37, 99, 235), -1)
                         cv2.putText(frame, label, (x1 + 3, y1 - 4),
-                                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (10, 12, 16), 1)
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
 
             # Count overlay
-            cv2.rectangle(frame, (0, 0), (260, 42), (10, 12, 16), -1)
+            cv2.rectangle(frame, (0, 0), (260, 42), (37, 99, 235), -1)
             cv2.putText(frame, f"Persons Detected: {person_count}", (10, 28),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 229, 255), 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2)
 
             result_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             st.markdown("<hr>", unsafe_allow_html=True)
@@ -370,7 +375,7 @@ else:
 # ── Footer ─────────────────────────────────────────────────────────────────────
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown(
-    '<div style="text-align:center; color:#2d3340; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;">'
+    '<div style="text-align:center; color:#d1d5db; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; font-family:\'DM Sans\',sans-serif;">'
     'Human Detector · YOLOv8 · Ultralytics'
     '</div>',
     unsafe_allow_html=True
