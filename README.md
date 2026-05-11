@@ -9,9 +9,13 @@ It works on both **webcam streams** and **video files**, highlighting detected p
 The goal of this project is to build a **real-time person detection system** using the YOLOv8 deep learning model.  
 The system can process input from:
 - A **webcam** (live detection)  
-- A **video file** (offline detection)  
+- A **video file** (offline detection
+- Streamlit App
 
 It identifies all persons in each frame, draws bounding boxes, labels them, and counts the total persons detected.
+
+<img width="1408" height="768" alt="Human Detection" src="https://github.com/user-attachments/assets/d6f79497-b030-4152-9c78-2484f9597b64" />
+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
