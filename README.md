@@ -15,6 +15,13 @@ It identifies all persons in each frame, draws bounding boxes, labels them, and 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## 🌐 Live Demo
+
+Click here to try the live app 👉 [Human/Person Detection App](https://person-detection.streamlit.app/)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 ## ⚙️ Tools & Technologies
 - **Python 3.8+** – Core programming language  
 - **OpenCV (cv2)** – Video processing and visualization  
@@ -34,19 +41,25 @@ It identifies all persons in each frame, draws bounding boxes, labels them, and 
 
 ## 📂 Project Structure
 
-├── person_video.py 
+├── README.md 
 
-├── person_webcam.py 
+├── app.py
 
 ├── input_video.mp4 
 
 ├── output_video.mp4 
 
-├── README.md 
+├── packages.txt
 
-├── yolov8n.pt
+├── person_video.py
 
-└── requirements.txt 
+├── person_webcam.py
+
+├── requirements.txt 
+
+├── runtime.txt
+
+└── yolov8n.pt
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -109,11 +122,15 @@ BS Computer Science (AI Specialization)
 
 AI/ML Engineer
 
-Data Science & Gen AI Enthusiast
+Kaggle Grand Master
+
+Data Science & Gen AI 
 
 📫 Connect with me on [LinkedIn](https://www.linkedin.com/in/muqadasejaz/)  
 
 🌐 GitHub: [github.com/muqadasejaz](https://github.com/muqadasejaz)
+
+📬 Kaggle: [Kaggle Profile](https://www.kaggle.com/muqaddasejaz) 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
